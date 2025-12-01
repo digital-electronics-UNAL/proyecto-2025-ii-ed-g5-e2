@@ -3,7 +3,7 @@ Aquí se va a encontrar la FSM principal que contiene toda la lógico de switche
 y de la información que va a mostrar la lcd
 */
 
-module FMS_principal #(parameter )(
+module FMS_principal #(parameter COUNT_MAX = 800000)(
     input clk,
     input rst,
     input [7:0] sen_1,  
@@ -28,7 +28,15 @@ reg LCD_desaparecio;
 reg LCD_contenida;
 
 
-
+//Divisor de Frecuencia 
+always @(posedge clk) begin
+    if (clk_counter == COUNT_MAX-1) begin
+        clk_16ms <= ~clk_16ms;
+        clk_counter <= 'b0;
+    end else begin
+        clk_counter <= clk_counter + 1;
+    end
+end
 
 
 //Comparador diferencial para cada sensor
@@ -56,7 +64,7 @@ end
 
 //Activación de reles
 always @(*) begin
-    case (state_out)
+    case (fsm_State)
         STATE_IDLE: begin
             relay_1 = 1'b0;
             relay_2 = 1'b0;
@@ -89,7 +97,7 @@ end
 
 //Estados de la LCD
 always @(*) begin
-    case (state_out)
+    case (fsm_state)
         STATE_IDLE: begin
 
         end
