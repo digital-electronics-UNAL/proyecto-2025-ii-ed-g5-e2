@@ -73,7 +73,6 @@ module lcd_controller (
                 end
 
                 // 4. Escribir Valor Numérico Dinámico "XX.X"
-                // Asumimos sensor_val = 125 (queremos ver "12.5")
                 WRITE_VAL: begin
                     rs <= 1;
                     case (step)
