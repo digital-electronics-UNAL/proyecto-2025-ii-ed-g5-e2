@@ -26,8 +26,6 @@ module top_module (
 
     // Ajuste de escala simple
     // El INA219 suele devolver valores pequeños en los bits bajos.
-    // Aquí tomamos una porción para mostrar. Ajusta este "slice" [9:0]
-    // según qué tan grandes sean los números que ves en tu analizador Saleae.
     always @(posedge clk) begin
         display_data <= raw_data[9:0]; 
     end
