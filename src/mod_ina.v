@@ -18,7 +18,7 @@ module i2c_ina219 (
         end else clk_count <= clk_count + 1;
     end
     
-    assign scl = i2c_clk; // El reloj sale directo (puedes invertirlo si hay problemas de fase)
+    assign scl = i2c_clk; // El reloj sale directo 
 
     // Máquina de Estados
     localparam STATE_IDLE = 0, STATE_START = 1, STATE_ADDR = 2, 
@@ -55,7 +55,6 @@ module i2c_ina219 (
                 STATE_ADDR: begin
                     sda_en <= 1;
                     // Dirección 0x40 (1000000) + Read bit (1) = 10000001 (0x81)
-                    // Nota: Asumimos que el puntero de registro ya está en 0x01 o 0x04 por defecto
                     case (bit_cnt)
                         7: sda_out <= 1; 6: sda_out <= 0; 5: sda_out <= 0; 4: sda_out <= 0;
                         3: sda_out <= 0; 2: sda_out <= 0; 1: sda_out <= 0; 0: sda_out <= 1;
