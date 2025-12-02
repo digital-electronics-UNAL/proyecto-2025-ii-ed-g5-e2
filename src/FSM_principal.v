@@ -15,10 +15,20 @@ module FMS_principal #(parameter COUNT_MAX = 800000)(
 
 
 //Estados de la FSM
-localparam STATE_IDLE    = 4'b0000;
-localparam STATE_HEAR_SENSOR = 4'b0001;
-localparam STATE_FAIL_DETECTED = 4'b0010;
-localparam STATE_DONE    = 4'b0011;
+localparam STATE_IDLE = 
+localparam STATE_HEAR_SENSOR = 
+localparam STATE_FAIL_DETECTED_1 = 
+localparam STATE_FAIL_DETECTED_2 = 
+localparam STATE_FAIL_DETECTED_3 = 
+localparam STATE_OPEN_1 = 
+localparam STATE_OPEN_2 = 
+localparam STATE_OPEN_3 =
+localparam STATE_CLOSE_1 = 
+localparam STATE_CLOSE_2 = 
+localparam STATE_CLOSE_3 =
+localparam STATE_DEFINITIVE_FAIL_1 = 
+localparam STATE_DEFINITIVE_FAIL_2 = 
+localparam STATE_DEFINITIVE_FAIL_3 =
 
 // Un parametro para indicar LCD
 reg LCD_hola; 
