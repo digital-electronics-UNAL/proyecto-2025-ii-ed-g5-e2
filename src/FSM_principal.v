@@ -6,9 +6,9 @@ y de la información que va a mostrar la lcd
 module FMS_principal #(parameter COUNT_MAX = 800000)(
     input clk,
     input rst,
-    input [7:0] sen_1,  
-    input [7:0] sen_2, 
-    input [7:0] sen_3, 
+    input [------:0] sen_1,  
+    input [------:0] sen_2, 
+    input [-------:0] sen_3, 
     output reg [3:0] state_out,
     output reg [7:0] output_signal
 );
@@ -17,9 +17,6 @@ module FMS_principal #(parameter COUNT_MAX = 800000)(
 //Estados de la FSM
 localparam STATE_IDLE = 
 localparam STATE_HEAR_SENSOR = 
-localparam STATE_FAIL_DETECTED_1 = 
-localparam STATE_FAIL_DETECTED_2 = 
-localparam STATE_FAIL_DETECTED_3 = 
 localparam STATE_OPEN_1 = 
 localparam STATE_OPEN_2 = 
 localparam STATE_OPEN_3 =
@@ -30,13 +27,13 @@ localparam STATE_DEFINITIVE_FAIL_1 =
 localparam STATE_DEFINITIVE_FAIL_2 = 
 localparam STATE_DEFINITIVE_FAIL_3 =
 
-// Un parametro para indicar LCD
-reg LCD_hola; 
-reg LCD_medición;
-reg LCD_falla;
-reg LCD_desaparecio;
-reg LCD_contenida;
-
+//Variables internas del programa
+reg [3:0] fsm_state;
+reg [3:0] next_state;
+reg clk_16ms;
+reg [--------:0] diff_sen_1;
+reg [---------:0] diff_sen_2;
+reg [--------:0] diff_sen_3;
 
 //Divisor de Frecuencia 
 always @(posedge clk) begin
@@ -80,46 +77,64 @@ always @(*) begin
             relay_2 = 1'b0;
             relay_3 = 1'b0;
         end
-        STATE_HEAR_SENSOR: begin
+        STATE_OPEN_1: begin
+            relay_1 = 1'b1;
+        end
+        STATE_OPEN_2: begin
+            relay_2 = 1'b1;
+        end
+        STATE_OPEN_3: begin    
+            relay_3 = 1'b1;
+        end
+        STATE_CLOSE_1: begin
             relay_1 = 1'b0;
-            relay_2 = 1'b0;
-            relay_3 = 1'b0;
         end
-        STATE_FAIL_DETECTED: begin
-            if(fail_sen_1) begin
-                relay_1 = 1'b1;
-            end
-            if(fail_sen_2) begin
-                relay_2 = 1'b1;
-            end
-            if(fail_sen_3) begin
-                relay_3 = 1'b1;
-            end
+        STATE_CLOSE_2: begin
+            relay_2 = 1'b0;       
+        end    
+        STATE_CLOSE_3: begin
+            relay_3 = 1'b0;       
         end
-        STATE_DONE: begin
-            relay_1 = 1'b0;
-            relay_2 = 1'b0;
-            relay_3 = 1'b0;
+        STATE_DEFINITIVE_FAIL_1: begin
+            relay_1 = 1'b1;
         end
+        STATE_DEFINITIVE_FAIL_2: begin
+            relay_2 = 1'b1;
+        end
+        STATE_DEFINITIVE_FAIL_3: begin
+            relay_3 = 1'b1;
+        end            
     endcase
 end
 
-
-//Estados de la LCD
+//Las transiciones de la FSM
 always @(*) begin
-    case (fsm_state)
-        STATE_IDLE: begin
-
+    case(fsm_state)
+        IDLE: begin
+            next_state <= (ready_i)? STATE_HEAR_SENSOR : IDLE;
         end
-        STATE_HEAR_SENSOR: begin
-
+        STATE_HEAR_SENSOR: begin 
+            if (fail_sen_1 <= 1'b1) begin
+                next_state <= STATE_OPEN_1;
+            end else if (fail_sen_2 <= 1'b1) begin
+                next_state <= STATE_OPEN_2;
+            end else if (fail_sen_3 <= 1'b1) begin
+                next_state <= STATE_OPEN_3;
+            end else begin
+                next_state <= STATE_HEAR_SENSOR;
+            end
         end
-        STATE_FAIL_DETECTED: begin
-
+        STATE_OPEN_1:begin
+			next_state <= (data_counter == NUM_DATA_PERLINE)? CONFIG_CMD2 : WR_STATIC_TEXT_1L;
         end
-        STATE_DONE: begin
-
+        STATE_OPEN_2: begin 
+            next_state <= WR_STATIC_TEXT_2L;
         end
+	    STATE_OPEN_3: begin
+			next_state <= (data_counter == NUM_DATA_PERLINE)? WRITE_DYNAMIC_TXT: WR_STATIC_TEXT_2L;
+		end
+        //Se tiene de defecto el caso de escribir el texto dinámico
+        default: next_state = WRITE_DYNAMIC_TXT;
     endcase
 end
 
