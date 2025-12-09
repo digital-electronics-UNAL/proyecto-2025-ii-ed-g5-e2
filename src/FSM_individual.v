@@ -72,6 +72,13 @@ always @(posedge clk_16ms or posedge rst) begin
                     end
                 end
             end
+            STATE_DEFINITIVE_FAIL: begin
+                relay_out <= 1'b1;
+                next_state <= STATE_DEFINITIVE_FAIL;
+            end
+            default: begin
+                next_state <= STATE_IDLE;
+            end
         endcase
     end
 end
