@@ -48,7 +48,7 @@ always @(posedge clk_16ms or posedge rst) begin
                 retry_cnt <= 2'b00;
                 timer <= 9'b0;
             end
-            STATE_HEAT_SENSOR: begin
+            STATE_HEAR_SENSOR: begin
                 if (fail_sen) begin
                     next_state <= STATE_OPEN;
                 end else begin
@@ -57,6 +57,20 @@ always @(posedge clk_16ms or posedge rst) begin
             end
             STATE_OPEN: begin
                 relay_out <= 1'b1;
+                next_state <= STATE_WAIT_5S;
+            end
+            STATE_WAIT_5S: begin
+                if (timer < 9'd312) begin // 5s at 16ms clock
+                    timer <= timer + 1;
+                    next_state <= STATE_WAIT_5S;
+                end else begin
+                    timer <= 9'b0;
+                    if (retry_cnt == 3'b11) begin
+                        next_state <= STATE_DEFINITIVE_FAIL;
+                    end else begin
+                        next_state <= STATE_HEAR_SENSOR;
+                    end
+                end
             end
         endcase
     end
