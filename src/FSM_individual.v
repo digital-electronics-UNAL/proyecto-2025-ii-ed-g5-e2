@@ -1,35 +1,32 @@
-module FSM_individual #(
+module FSM_individual #(parameter threshold = 16'd100,
+parameter sen_ref = 16'd350
 )(
     input clk_16ms,
     input rst,
     input enable,              
-    input [werwerewrwerwe-1:0] sen,
-    input [werwerwerweewrw-1:0] sen_ref,
-    input [wrwerwerwerwr-1:0] threshold,
-    output reg relay_out,  
+    input [15:0] sen,
+    output reg relay_out
 );
 
 // Estados
-localparam STATE_IDLE = 2'd0;
-localparam STATE_HEAR_SENSOR = 2'd1;
-localparam STATE_OPEN = ;
-localparam STATE_WAIT_5S = ;
-localparam STATE_DEFINITIVE_FAIL = ;
+localparam STATE_IDLE = 3'd0;
+localparam STATE_HEAR_SENSOR = 3'd1;
+localparam STATE_OPEN =  3'd2;
+localparam STATE_WAIT_5S =  3'd3;
+localparam STATE_DEFINITIVE_FAIL =  3'd4;
 
 //Variables internas del programa
 reg [3:0] fsm_state;
 reg [3:0] next_state;
-reg [--------:0] diff_sen;
-reg [1:0] state, next_state;
 reg [1:0] retry_cnt;
 reg [8:0] timer;
 
 // Lógica de Comparación
-wire fail_sen;
-reg [--------------:0] sen_diff;
+reg fail_sen;
+reg [15:0] sen_diff;
     
 always @(*) begin
-    sen_diff = (sen > sen_ref) ? (sen - sen_ref) : (sen - sen_val);
+    sen_diff = (sen > sen_ref) ? (sen - sen_ref) : (sen_ref - sen);
     assign fail_sen = (sen_diff > threshold);
 end
 
