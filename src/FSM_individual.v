@@ -27,7 +27,7 @@ reg [15:0] sen_diff;
     
 always @(*) begin
     sen_diff = (sen > sen_ref) ? (sen - sen_ref) : (sen_ref - sen);
-    assign fail_sen = (sen_diff > threshold);
+    fail_sen <= (sen_diff > threshold);
 end
 
 // Lógica de la FSM
