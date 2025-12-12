@@ -1,7 +1,7 @@
 module FSM_individual #(parameter threshold = 16'd100,
 parameter sen_ref = 16'd350
 )(
-    input clk_16ms,
+    input clk,
     input rst,
     input enable,              
     input [15:0] sen,
@@ -31,7 +31,7 @@ always @(*) begin
 end
 
 // Lógica de la FSM
-always @(posedge clk_16ms or posedge rst) begin
+always @(posedge clk or posedge rst) begin
     if (rst) begin
         fsm_state <= STATE_IDLE;
         relay_out <= 1'b0;
