@@ -14,13 +14,33 @@ Este proyecto se enfoca en la detección y protección ante fallas por sobre-cor
 # Documentación
 ## Descripción de la arquitectura
 
-### Diagrama de bloques
 
-![Diagrama de bloques](Images/bloques.png)
+
+
 
 ## Diagramas de la arquitectura 
 
 (diagramas rtl)
+
+### Diagrama de bloques
+
+![Diagrama de bloques](Images/bloques)
+
+
+### Circuito Implementado
+
+![Circuito](Images/circuito )
+
+###  FSM INA Controller
+
+![Ina Controller](Images/ina)
+
+
+### FSM Relés
+
+![Reles](Images/reles)
+
+
 
 ## Simulaciones
 
