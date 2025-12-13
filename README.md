@@ -2,17 +2,23 @@
 # Proyecto final - Electrónica Digital 1 - 2025-II
 
 # Integrantes
+- [Abishek Arunachalam](https://github.com/Abishek957951)
+- [Juan David Delgado Africano](https://github.com/JuanDaDel)
+- [Johan Sebastian Beltran Hernandez](https://github.com/johanb1306)
 
+# Scutum
 
-# Nombre del proyecto
+Este proyecto se enfoca en la detección y protección ante fallas por sobre-corrientes con la ayuda de sensores *INA219* y *relés* implementados en un circuito en pequeña escala. 
 
 
 # Documentación
 ## Descripción de la arquitectura
 
 
-## Diagramas de la arquitectura
 
+## Diagramas de la arquitectura 
+
+(diagramas rtl)
 
 ## Simulaciones
 
