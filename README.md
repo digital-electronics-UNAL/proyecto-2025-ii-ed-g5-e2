@@ -33,7 +33,7 @@ Este proyecto se enfoca en la detección y protección ante fallas por sobre-cor
 
 ###  FSM INA Controller
 
-![Ina Controller](Images/ina)
+![Ina Controller](Images/inaa.jpg)
 
 
 ### FSM Relés
