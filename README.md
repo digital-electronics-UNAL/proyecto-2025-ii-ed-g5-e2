@@ -47,3 +47,7 @@ Este proyecto se enfoca en la detección y protección ante fallas por sobre-cor
 
 ## Evidencias de implementación
 
+En los siguintes video se evidencia el proyecto funcionando:
+- [Ver.1](https://drive.google.com/file/d/1Mmljcazj2t6dFqfmwmpv4hNdylavXCxc/view?usp=sharing)
+- [Ver.2](https://drive.google.com/file/d/1lYLRodQK6aysjbRK7mQdx4uk0jrV_N0d/view?usp=sharing)
+
