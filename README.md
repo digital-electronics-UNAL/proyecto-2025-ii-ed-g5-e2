@@ -18,6 +18,7 @@ La descripción se encuentra debidamente comentada en los códigos anexos.
 
 ## Diagramas de la arquitectura 
 
+### Diagrama RTL
 ![Diagrama de rtl](Images/rtl.jpeg)
 
 ### Diagrama de bloques
