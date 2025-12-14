@@ -12,15 +12,14 @@ Este proyecto se enfoca en la detección y protección ante fallas por sobre-cor
 
 
 # Documentación
+
 ## Descripción de la arquitectura
-
-
-
-
+La descripción se encuentra debidamente comentada.
 
 ## Diagramas de la arquitectura 
 
-(diagramas rtl)
+
+
 
 ### Diagrama de bloques
 
