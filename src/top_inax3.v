@@ -76,7 +76,7 @@ module top_module_x3 (
 
                 // --- SENSOR 3 ---
                 if (w_s3 > 16'd500 && w_s3 < 16'd32000) begin
-					     buzzer <= 1'b0;
+					     buzzer <= 1'b0º;
                     if (f3 < 1000) f3 <= f3 + 1;
                     else relay3 <= 0; // 0 = Abrir
                 end else f3 <= 0;
