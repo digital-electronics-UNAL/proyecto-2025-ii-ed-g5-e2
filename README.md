@@ -40,8 +40,13 @@ La descripción se encuentra debidamente comentada.
 
 
 
-## Simulaciones
+## Pruebas en Arduino
 
+La primera prueba que se hizo fue el de la obtención del protocolo I2C en la FPGA, para ello primero se realizaron unos test preliminares en Arduino, los cuales arrojaron esto:
+
+![Arduino Test](Images/arduino.jpeg)
+
+Al rededor de esta señal cuadrada es que se desarrollo el INA controller encargado de la comunicación entre FPGA y sensor.
 
 
 ## Evidencias de implementación
