@@ -18,7 +18,7 @@ La descripción se encuentra debidamente comentada.
 
 ## Diagramas de la arquitectura 
 
-
+![Diagrama de rtl](Images/rtl.jpeg)
 
 
 ### Diagrama de bloques
