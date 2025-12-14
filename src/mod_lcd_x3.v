@@ -1,3 +1,4 @@
+//MOdulo de control para lcd
 module lcd_controller_x3 (
     input clk,
     input reset,
