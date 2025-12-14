@@ -14,7 +14,7 @@ Este proyecto se enfoca en la detección y protección ante fallas por sobre-cor
 # Documentación
 
 ## Descripción de la arquitectura
-La descripción se encuentra debidamente comentada.
+La descripción se encuentra debidamente comentada en los códigos anexos.
 
 ## Diagramas de la arquitectura 
 
@@ -51,7 +51,7 @@ Al rededor de esta señal cuadrada es que se desarrollo el INA controller encarg
 
 ## Evidencias de implementación
 
-En los siguintes video se evidencia el proyecto funcionando:
+En los siguintes videos se evidencia el proyecto funcionando:
 - [Ver.1](https://drive.google.com/file/d/1Mmljcazj2t6dFqfmwmpv4hNdylavXCxc/view?usp=sharing)
 - [Ver.2](https://drive.google.com/file/d/1lYLRodQK6aysjbRK7mQdx4uk0jrV_N0d/view?usp=sharing)
 
