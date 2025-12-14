@@ -20,7 +20,6 @@ La descripción se encuentra debidamente comentada.
 
 ![Diagrama de rtl](Images/rtl.jpeg)
 
-
 ### Diagrama de bloques
 
 ![Diagrama de bloques](Images/bloques)
@@ -42,6 +41,7 @@ La descripción se encuentra debidamente comentada.
 
 
 ## Simulaciones
+
 
 
 ## Evidencias de implementación
