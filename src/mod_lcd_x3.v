@@ -37,7 +37,8 @@ module lcd_controller_x3 (
                FINISH = 15;
 
     reg [4:0] state = PWR_ON;
-    reg [3:0] char_idx = 0;
+	 reg [3:0] char_idx = 0;
+    reg [3:0] char_idx1 = 0;
     reg [2:0] sub_step = 0; // 0: Setup, 1: Enable High, 2: Enable Low
 
     always @(posedge clk or negedge reset) begin
@@ -61,14 +62,15 @@ module lcd_controller_x3 (
                         // --- SENSOR 1 ---
                         WR_S1_LABEL: begin 
                             rs<=1; 
-                            case(char_idx) 0:data<="S"; 1:data<="1"; 2:data<=":"; default:data<=" "; endcase 
+                            case(char_idx) 0:data<="S"; 1:data<="1"; 2:data<=":"; endcase 
                         end
                         WR_S1_VAL: begin
                             rs<=1;
-                            case(char_idx)
+                            case(char_idx1)
                                 0:data<=8'h30 + ((val1/100)%10); // Centenas
                                 1:data<=8'h30 + ((val1/10)%10);  // Decenas
-                                2:data<=8'h30 + (val1%10);       // Unidades
+										  2:data<=8'h2E;  // Punto
+                                3:data<=8'h30 + (val1%10);       // Unidades
                             endcase
                         end
                         
@@ -77,14 +79,15 @@ module lcd_controller_x3 (
                         // --- SENSOR 2 ---
                         WR_S2_LABEL: begin 
                             rs<=1; 
-                            case(char_idx) 0:data<="S"; 1:data<="2"; 2:data<=":"; default:data<=" "; endcase 
+                            case(char_idx) 0:data<="S"; 1:data<="2"; 2:data<=":"; endcase 
                         end
                         WR_S2_VAL: begin
                             rs<=1;
-                            case(char_idx)
+                            case(char_idx1)
                                 0:data<=8'h30 + ((val2/100)%10);
                                 1:data<=8'h30 + ((val2/10)%10);
-                                2:data<=8'h30 + (val2%10);
+										  2:data<=8'h2E;  // Punto
+                                3:data<=8'h30 + (val2%10);
                             endcase
                         end
 
@@ -93,14 +96,15 @@ module lcd_controller_x3 (
                         // --- SENSOR 3 ---
                         WR_S3_LABEL: begin 
                             rs<=1; 
-                            case(char_idx) 0:data<="S"; 1:data<="3"; 2:data<=":"; default:data<=" "; endcase 
+                            case(char_idx) 0:data<="S"; 1:data<="3"; 2:data<=":"; endcase 
                         end
                         WR_S3_VAL: begin
                             rs<=1;
-                            case(char_idx)
+                            case(char_idx1)
                                 0:data<=8'h30 + ((val3/100)%10);
                                 1:data<=8'h30 + ((val3/10)%10);
-                                2:data<=8'h30 + (val3%10);
+										  2:data<=8'h2E;  // Punto
+                                3:data<=8'h30 + (val3%10);
                             endcase
                         end
                         
@@ -122,21 +126,21 @@ module lcd_controller_x3 (
                         FUNC_SET3: state <= DISP_ON;
                         DISP_ON: state <= CLEAR;
                         CLEAR: state <= ENTRY_MODE;
-                        ENTRY_MODE: begin state <= WR_S1_LABEL; char_idx <= 0; end
+                        ENTRY_MODE: begin state <= WR_S1_LABEL; char_idx <= 0; char_idx1 <= 0; end
 
                         WR_S1_LABEL: if(char_idx==2) begin state<=WR_S1_VAL; char_idx<=0; end else char_idx<=char_idx+1;
-                        WR_S1_VAL:   if(char_idx==2) begin state<=WR_SPACE; char_idx<=0; end else char_idx<=char_idx+1;
-                        WR_SPACE:    begin state<=WR_S2_LABEL; char_idx<=0; end
+                        WR_S1_VAL:   if(char_idx1==3) begin state<=WR_SPACE; char_idx1<=0; end else char_idx1<=char_idx1+1;
+                        WR_SPACE:    begin state<=WR_S2_LABEL; char_idx<=0; char_idx1<=0; end
                         
                         WR_S2_LABEL: if(char_idx==2) begin state<=WR_S2_VAL; char_idx<=0; end else char_idx<=char_idx+1;
-                        WR_S2_VAL:   if(char_idx==2) begin state<=NEXT_LINE; char_idx<=0; end else char_idx<=char_idx+1;
+                        WR_S2_VAL:   if(char_idx1==3) begin state<=NEXT_LINE; char_idx1<=0; end else char_idx1<=char_idx1+1;
                         
-                        NEXT_LINE:   begin state<=WR_S3_LABEL; char_idx<=0; end
+                        NEXT_LINE:   begin state<=WR_S3_LABEL; char_idx<=0; char_idx1<=0; end
                         
                         WR_S3_LABEL: if(char_idx==2) begin state<=WR_S3_VAL; char_idx<=0; end else char_idx<=char_idx+1;
-                        WR_S3_VAL:   if(char_idx==2) begin state<=FINISH; end else char_idx<=char_idx+1;
+                        WR_S3_VAL:   if(char_idx1==3) begin state<=FINISH; end else char_idx1<=char_idx1+1;
                         
-                        FINISH: begin state<=WR_S1_LABEL; char_idx<=0; end // Repetir loop
+                        FINISH: begin state<=WR_S1_LABEL; char_idx<=0; char_idx1 <= 0; end // Repetir loop
                     endcase
                 end
             endcase
