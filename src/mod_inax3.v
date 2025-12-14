@@ -1,3 +1,4 @@
+//Modulo que maneja el protocolo I2C para comunicación sensor-FPGA
 module i2c_ina219_x3 #(
     parameter [7:0] SENSOR_ADDR = 8'h80 // Dirección de ESCRITURA por defecto
 )(
